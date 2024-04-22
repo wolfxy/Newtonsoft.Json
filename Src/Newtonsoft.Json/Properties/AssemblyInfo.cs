@@ -67,4 +67,5 @@ using System.Security;
 [assembly: Guid("9ca358aa-317b-4925-8ada-4a29e943a363")]
 #endif
 
+[assembly: InternalsVisibleTo("Newtonsoft.Json.Test")]
 [assembly: CLSCompliant(true)]

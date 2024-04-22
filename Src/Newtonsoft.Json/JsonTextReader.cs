@@ -1406,7 +1406,9 @@ namespace Newtonsoft.Json
                 case 'f':
                 case 'F':
                 case 'x':
+                case 'o':
                 case 'X':
+                case 'O':
                 case '.':
                 case '0':
                 case '1':
@@ -2003,9 +2005,13 @@ namespace Newtonsoft.Json
                                 {
                                     Convert.ToInt64(number, 16);
                                 }
+                                else if (number.StartsWith("0o", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    Convert.ToInt64(number.Substring(2), 8);
+                                }
                                 else
                                 {
-                                    Convert.ToInt64(number, 8);
+                                    Convert.ToInt64(number, 10);
                                 }
                             }
                             catch (Exception ex)
@@ -2038,8 +2044,8 @@ namespace Newtonsoft.Json
 
                             try
                             {
-                                int integer = number.StartsWith("0x", StringComparison.OrdinalIgnoreCase) ? Convert.ToInt32(number, 16) : Convert.ToInt32(number, 8);
-
+                                int integer = number.StartsWith("0x", StringComparison.OrdinalIgnoreCase) ? Convert.ToInt32(number, 16) :
+                                              number.StartsWith("0o", StringComparison.OrdinalIgnoreCase) ? Convert.ToInt32(number.Substring(2), 8) : Convert.ToInt32(number, 10);
                                 numberValue = integer;
                             }
                             catch (Exception ex)
@@ -2081,7 +2087,8 @@ namespace Newtonsoft.Json
                             try
                             {
                                 // decimal.Parse doesn't support parsing hexadecimal values
-                                long integer = number.StartsWith("0x", StringComparison.OrdinalIgnoreCase) ? Convert.ToInt64(number, 16) : Convert.ToInt64(number, 8);
+                                long integer = number.StartsWith("0x", StringComparison.OrdinalIgnoreCase) ? Convert.ToInt32(number, 16) :
+                                               number.StartsWith("0o", StringComparison.OrdinalIgnoreCase) ? Convert.ToInt32(number.Substring(2), 8) : Convert.ToInt32(number, 10);
 
                                 numberValue = Convert.ToDecimal(integer);
                             }
@@ -2120,7 +2127,8 @@ namespace Newtonsoft.Json
                             try
                             {
                                 // double.Parse doesn't support parsing hexadecimal values
-                                long integer = number.StartsWith("0x", StringComparison.OrdinalIgnoreCase) ? Convert.ToInt64(number, 16) : Convert.ToInt64(number, 8);
+                                long integer = number.StartsWith("0x", StringComparison.OrdinalIgnoreCase) ? Convert.ToInt32(number, 16) :
+                                               number.StartsWith("0o", StringComparison.OrdinalIgnoreCase) ? Convert.ToInt32(number.Substring(2), 8) : Convert.ToInt32(number, 10);
 
                                 numberValue = Convert.ToDouble(integer);
                             }
@@ -2161,7 +2169,8 @@ namespace Newtonsoft.Json
 
                             try
                             {
-                                numberValue = number.StartsWith("0x", StringComparison.OrdinalIgnoreCase) ? Convert.ToInt64(number, 16) : Convert.ToInt64(number, 8);
+                                numberValue = number.StartsWith("0x", StringComparison.OrdinalIgnoreCase) ? Convert.ToInt32(number, 16) :
+                                              number.StartsWith("0o", StringComparison.OrdinalIgnoreCase) ? Convert.ToInt32(number.Substring(2), 8) : Convert.ToInt32(number, 10);
                             }
                             catch (Exception ex)
                             {
